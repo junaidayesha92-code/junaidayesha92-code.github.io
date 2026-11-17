@@ -271,7 +271,11 @@ window.addEventListener("hashchange",route);route();
 var dl=document.getElementById("dl"),note=document.getElementById("dlnote");
 dl.addEventListener("click",async function(){
 var d=null;try{d=window.claude?await window.claude.use("downloads"):null}catch(e){}
-if(!d){note.textContent="Downloads are not available in this view. Email ajunaid1@ualberta.ca for a copy.";return}
+if(!d){
+if(!window.claude){try{var bb=atob(B64),uu=new Uint8Array(bb.length);for(var k=0;k<bb.length;k++)uu[k]=bb.charCodeAt(k);
+var url=URL.createObjectURL(new Blob([uu],{type:"application/pdf"}));var a=document.createElement("a");a.href=url;a.download="Ayesha_Junaid_Resume.pdf";
+document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},4000);note.textContent="Downloading. Thank you!";return}catch(e){}}
+note.textContent="Downloads are not available in this view. Email ajunaid1@ualberta.ca for a copy.";return}
 try{var b=atob(B64),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);
 await d.save({filename:"Ayesha_Junaid_Resume.pdf",data:u});note.textContent="Saved. Thank you!"}
 catch(e){if(e&&e.code==="declined")return;note.textContent="Could not save the file. Email ajunaid1@ualberta.ca for a copy."}
